@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>DermAI – Skin Care Analysis</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-c">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+  <div class="pts" id="particles"></div>
+
+  <div class="page">
+
+    <!-- ── HEADER ── -->
+    <header>
+      <div class="logo-badge">
+        <div class="ldot"></div>
+        AI-Powered Skin Analysis
+      </div>
+      <h1>Discover Your <em>Perfect</em><br>Skin Care Routine</h1>
+      <p class="subtitle">
+        Personalized recommendations — AI analyzes your photo offline
+        using clinical dermatology standards. No internet API required.
+      </p>
+      <div class="brands-strip">
+        <a class="brand-link" href="https://jenpharm.com/" target="_blank">🌿 Jenpharm</a>
+        <span class="bsep">·</span>
+        <a class="brand-link" href="https://organictraveller.store/" target="_blank">🌱 Organic Travellers</a>
+        <span class="bsep">·</span>
+        <a class="brand-link" href="https://www.cerave.com/" target="_blank">💧 CeraVe</a>
+      </div>
+    </header>
+
+    <!-- ── MODE SELECTION TABS ── -->
+    <div class="mode-tabs">
+      <div class="mode-tab active" id="tab1" onclick="switchMode(1)">
+        <div class="apill">Active</div>
+        <div class="tab-icon">💬</div>
+        <h3>Tell Us Your Skin Type</h3>
+        <p>Select your skin type and concerns for instant expert recommendations.</p>
+      </div>
+      <div class="mode-tab" id="tab2" onclick="switchMode(2)">
+        <div class="apill">Active</div>
+        <div class="tab-icon">📸</div>
+        <h3>Upload a Skin Photo</h3>
+        <p>AI scans pixel-level data offline — no API or internet needed.</p>
+      </div>
+    </div>
+
+    <!-- ── PANEL 1: Manual Skin Type ── -->
+    <div class="panel" id="panel1">
+      <div class="oop-badge">
+        🧬 <span>OOP:</span> Encapsulation — SkinProfile stores type &amp; concerns as private attributes
+      </div>
+      <div class="slabel">Step 1 — Select Your Skin Type</div>
+      <div class="skin-types" id="skinTypeGrid"></div>
+
+      <div class="slabel">Step 2 — Select Skin Concerns (optional)</div>
+      <div class="concerns-grid" id="concernsGrid"></div>
+
+      <button class="btn-analyze" onclick="analyzeManual()">
+        ✦ Analyze &amp; Recommend Products
+      </button>
+    </div>
+
+    <!-- ── PANEL 2: Photo Upload ── -->
+    <div class="panel hidden" id="panel2">
+      <div class="oop-badge">
+        🧬 <span>OOP:</span> Inheritance — ImageAnalyzer extends BaseAnalyzer · DSA — Pixel Array O(n)
+      </div>
+      <div class="slabel">Upload a Clear Photo of Your Skin or Face</div>
+
+      <div class="upload-zone" id="uploadZone"
+           onclick="document.getElementById('fileInput').click()"
+           ondragover="event.preventDefault();this.classList.add('drag-over')"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="handleDrop(event)">
+        <span class="uico">🖼️</span>
+        <h4>Drop your photo here or click to browse</h4>
+        <p>JPG or PNG · 100% offline · No API key needed</p>
+      </div>
+
+      <input type="file" id="fileInput" accept="image/*" onchange="handleFile(this.files[0])"/>
+
+      <div id="previewBox">
+        <img id="previewImg" src="" alt="Preview"/>
+        <p class="prev-label">✓ Photo ready — click Analyze below</p>
+      </div>
+
+      <button class="btn-analyze" id="analyzeImgBtn" onclick="analyzeImage()" disabled>
+        ✦ Scan &amp; Detect Skin Problems
+      </button>
+    </div>
+
+    <!-- ── LOADER ── -->
+    <div class="loader-wrap" id="loader">
+      <div class="loader-ring">
+        <span class="loader-emoji">🔬</span>
+      </div>
+      <div class="loader-steps">
+        <div class="lstep" id="ls1">📊 Extracting pixel color data…</div>
+        <div class="lstep" id="ls2">🔴 Measuring redness levels…</div>
+        <div class="lstep" id="ls3">💡 Analyzing shine &amp; oil signals…</div>
+        <div class="lstep" id="ls4">🎨 Checking tone uniformity…</div>
+        <div class="lstep" id="ls5">🌿 Matching DermNet classifications…</div>
+        <div class="lstep" id="ls6">✅ Selecting recommended products…</div>
+      </div>
+    </div>
+
+    <!-- ── RESULTS ── -->
+    <div id="results" class="hidden"></div>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+      <p>
+        Products from
+        <a href="https://jenpharm.com/" target="_blank">Jenpharm</a> ·
+        <a href="https://organictraveller.store/" target="_blank">Organic Travellers</a> ·
+        <a href="https://www.cerave.com/" target="_blank">CeraVe</a>
+      </p>
+      <p style="margin-top:6px;">
+        Clinical reference:
+        <a href="https://dermnetnz.org/" target="_blank">DermNet NZ</a> ·
+        <a href="https://www.aad.org/" target="_blank">American Academy of Dermatology</a>
+      </p>
+      <p style="margin-top:6px;">
+        Advanced Computer Programming Project — OOP &amp; DSA ·
+        Not a substitute for professional advice.
+      </p>
+    </footer>
+
+  </div><!-- end .page -->
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
